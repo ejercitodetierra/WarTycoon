@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ejército de Tierra</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Oswald:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#0d0e0b;
+  --olive:#3b4a2f;
+  --khaki:#5a5a35;
+  --gold:#b8962e;
+  --tan:#c8b88a;
+  --dark-tan:#7a6a4a;
+  --off:#e0d8c0;
+  --card:#14160f;
+  --border:#3a4228;
+}
+
+body{background:var(--bg);color:var(--off);font-family:'Oswald',sans-serif;overflow-x:hidden}
+
+/* ── CAMO BG ── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:
+    radial-gradient(ellipse 200px 120px at 5% 10%,  #1e2a14 0%,transparent 70%),
+    radial-gradient(ellipse 160px 200px at 25% 45%, #161e10 0%,transparent 70%),
+    radial-gradient(ellipse 240px 140px at 60% 8%,  #202c16 0%,transparent 70%),
+    radial-gradient(ellipse 180px 260px at 80% 35%, #181e12 0%,transparent 70%),
+    radial-gradient(ellipse 140px 100px at 45% 70%, #1a2414 0%,transparent 70%),
+    radial-gradient(ellipse 100px 160px at 90% 75%, #1e2a14 0%,transparent 70%),
+    radial-gradient(ellipse 200px 120px at 10% 85%, #161e10 0%,transparent 70%);
+  opacity:0.7;z-index:0;
+}
+
+/* ── SECTION 1: HERO ── */
+.hero{
+  position:relative;z-index:1;
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:40px 20px;
+  border-bottom:2px solid var(--border);
+}
+
+/* top bar */
+.top-bar{
+  display:flex;align-items:center;gap:10px;margin-bottom:28px;
+}
+.top-bar .line{width:60px;height:1px;background:var(--gold)}
+.top-bar .star{color:var(--gold);font-size:16px}
+
+/* title */
+.title{
+  font-family:'Black Ops One',cursive;
+  font-size:clamp(2.6rem,8vw,6rem);
+  text-transform:uppercase;text-align:center;
+  color:var(--off);
+  letter-spacing:0.05em;line-height:1;
+  text-shadow:2px 3px 0 #000,4px 6px 12px rgba(0,0,0,0.6);
+}
+
+/* chevron divider */
+.chevron-row{
+  display:flex;align-items:center;gap:8px;margin:16px 0 10px;
+}
+.chevron-row .hline{width:120px;height:1px;background:var(--khaki)}
+.chevron{color:var(--gold);font-size:1.1rem;letter-spacing:-4px}
+
+.subtitle{
+  font-family:'Black Ops One',cursive;
+  font-size:clamp(1rem,3vw,1.8rem);
+  letter-spacing:0.4em;color:var(--gold);
+  text-align:center;margin-bottom:44px;
+}
+
+/* discord button — bigger */
+.btn-discord{
+  display:flex;align-items:center;justify-content:center;
+  width:90px;height:90px;
+  background:#2b2f3a;
+  border:2px solid #5865F2;
+  text-decoration:none;
+  transition:transform 0.2s,box-shadow 0.2s;
+  clip-path:polygon(10px 0%,100% 0%,100% calc(100% - 10px),calc(100% - 10px) 100%,0% 100%,0% 10px);
+}
+.btn-discord:hover{transform:scale(1.1);box-shadow:0 0 22px rgba(88,101,242,0.5)}
+.btn-discord svg{width:50px;height:50px}
+
+/* scroll hint */
+.scroll-hint{
+  position:absolute;bottom:24px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  color:var(--dark-tan);font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;
+  animation:bounce 2s infinite;
+}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+.scroll-hint::after{content:'▼';font-size:0.8rem;color:var(--gold)}
+
+/* ── SECTION 2: TROOPS ── */
+.troops-section{
+  position:relative;z-index:1;
+  padding:64px 20px 80px;
+  max-width:900px;margin:0 auto;
+}
+
+.section-heading{
+  display:flex;align-items:center;gap:14px;margin-bottom:48px;
+}
+.section-heading .s-line{flex:1;height:1px;background:linear-gradient(90deg,var(--khaki),transparent)}
+.section-heading h2{
+  font-family:'Black Ops One',cursive;
+  font-size:1.3rem;letter-spacing:0.2em;color:var(--gold);white-space:nowrap;
+}
+
+/* rank card */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-left:4px solid var(--gold);
+  padding:24px 28px;
+  margin-bottom:28px;
+  position:relative;
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.card:hover{transform:translateX(4px);box-shadow:4px 0 20px rgba(0,0,0,0.5)}
+.card::before{
+  content:attr(data-rank);
+  position:absolute;top:14px;right:18px;
+  font-family:'Black Ops One',cursive;
+  font-size:0.65rem;letter-spacing:0.2em;
+  color:var(--khaki);text-transform:uppercase;
+}
+
+.card-header{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.avatar{
+  width:54px;height:54px;
+  background:var(--olive);
+  border:2px solid var(--khaki);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Black Ops One',cursive;font-size:1.3rem;color:var(--gold);
+  flex-shrink:0;
+}
+.card-name{font-family:'Black Ops One',cursive;font-size:1.25rem;color:var(--off);letter-spacing:0.05em}
+.card-title{font-size:0.78rem;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;margin-top:2px}
+
+/* stats grid */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:14px}
+.stat{background:rgba(255,255,255,0.03);border:1px solid var(--border);padding:10px 14px}
+.stat-label{font-size:0.65rem;letter-spacing:0.2em;color:var(--dark-tan);text-transform:uppercase;margin-bottom:4px}
+.stat-value{font-family:'Black Ops One',cursive;font-size:1.1rem;color:var(--off)}
+
+/* bar */
+.skill-row{margin-top:4px}
+.skill-label{font-size:0.68rem;letter-spacing:0.15em;color:var(--dark-tan);text-transform:uppercase;margin-bottom:5px}
+.bar-bg{background:rgba(255,255,255,0.07);height:6px;width:100%}
+.bar-fill{height:6px;background:linear-gradient(90deg,var(--khaki),var(--gold))}
+
+.card-bio{font-size:0.82rem;color:var(--tan);line-height:1.6;border-top:1px solid var(--border);padding-top:12px;margin-top:12px}
+
+/* medals row */
+.medals{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.medal{font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--border);color:var(--gold);background:rgba(184,150,46,0.08)}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="top-bar">
+    <div class="line"></div>
+    <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+    <div class="line"></div>
+  </div>
+
+  <h1 class="title">Ejército de Tierra</h1>
+
+  <div class="chevron-row">
+    <div class="hline"></div>
+    <span class="chevron">❯❯❯</span>
+    <div class="hline"></div>
+  </div>
+
+  <p class="subtitle">War Tycoon</p>
+
+  <a class="btn-discord" href="https://discord.gg/qjQQbmsPK" target="_blank" rel="noopener" title="Discord">
+    <svg viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+  </a>
+
+  <div class="scroll-hint">Desplaza</div>
+</section>
+
+<!-- ══ TROOPS ══ -->
+<section class="troops-section">
+  <div class="section-heading">
+    <h2>— Filas del Regimiento —</h2>
+    <div class="s-line"></div>
+  </div>
+
+  <!-- CARD 1 -->
+  <div class="card" data-rank="Sargento Mayor">
+    <div class="card-header">
+      <div class="avatar">TG</div>
+      <div>
+        <div class="card-name">Tu_gamer030</div>
+        <div class="card-title">Sargento Mayor · Veterano de élite</div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-label">Batallas ganadas</div><div class="stat-value">347</div></div>
+      <div class="stat"><div class="stat-label">Bajas enemigas</div><div class="stat-value">2.841</div></div>
+      <div class="stat"><div class="stat-label">Misiones completadas</div><div class="stat-value">89</div></div>
+      <div class="stat"><div class="stat-label">Ratio V/D</div><div class="stat-value">94%</div></div>
+    </div>
+
+    <div class="skill-row">
+      <div class="skill-label">Habilidad de combate</div>
+      <div class="bar-bg"><div class="bar-fill" style="width:92%"></div></div>
+    </div>
+    <br>
+    <div class="skill-row">
+      <div class="skill-label">Liderazgo táctico</div>
+      <div class="bar-bg"><div class="bar-fill" style="width:85%"></div></div>
+    </div>
+    <br>
+    <div class="skill-row">
+      <div class="skill-label">Precisión de fuego</div>
+      <div class="bar-bg"><div class="bar-fill" style="width:97%"></div></div>
+    </div>
+
+    <div class="card-bio">
+      Veterano con más de tres años en el frente. Tu_gamer030 ha liderado asaltos decisivos en las operaciones más críticas del regimiento. Reconocido por su puntería excepcional y su capacidad de mantener la línea bajo presión extrema. Jamás ha abandonado a un compañero caído en combate.
+    </div>
+
+    <div class="medals">
+      <span class="medal">🏅 Cruz de Guerra</span>
+      <span class="medal">⭐ Estrella de Plata</span>
+      <span class="medal">🎖️ Mérito Distinguido</span>
+      <span class="medal">🔰 Asalto Élite</span>
+    </div>
+  </div>
+
+  <!-- CARD 2 -->
+  <div class="card" data-rank="Comandante de Campo">
+    <div class="card-header">
+      <div class="avatar">ZG</div>
+      <div>
+        <div class="card-name">zargocista13</div>
+        <div class="card-title">Comandante de Campo · Estratega</div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-label">Batallas ganadas</div><div class="stat-value">512</div></div>
+      <div class="stat"><div class="stat-label">Territorios tomados</div><div class="stat-value">63</div></div>
+      <div class="stat"><div class="stat-label">Tropas comandadas</div><div class="stat-value">1.200+</div></div>
+      <div class="stat"><div class="stat-label">Ratio V/D</div><div class="stat-value">88%</div></div>
+    </div>
+
+    <div class="skill-row">
+      <div class="skill-label">Estrategia avanzada</div>
+      <div class="bar-bg"><div class="bar-fill" style="width:98%"></div></div>
+    </div>
+    <br>
+    <div class="skill-row">
+      <div class="skill-label">Comandancia en batalla</div>
+      <div class="bar-bg"><div class="bar-fill" style="width:93%"></div></div>
+    </div>
+    <br>
+    <div class="skill-row">
+      <div class="skill-label">Inteligencia táctica</div>
+      <div class="bar-bg"><div class="bar-fill" style="width:89%"></div></div>
+    </div>
+
+    <div class="card-bio">
+      La mente más fría del regimiento. zargocista13 planifica cada operación con precisión quirúrgica, anticipando los movimientos del enemigo antes de que ocurran. Ha conquistado más de 60 territorios estratégicos y su nombre es sinónimo de victoria inevitable. Especialista en guerra de posiciones y emboscadas.
+    </div>
+
+    <div class="medals">
+      <span class="medal">🏆 Gran Cruz Militar</span>
+      <span class="medal">⭐ Estrella de Oro</span>
+      <span class="medal">🎖️ Comandante Supremo</span>
+      <span class="medal">🔰 Conquista Total</span>
+    </div>
+  </div>
+
+</section>
+
+</body>
+    </html>
+  
